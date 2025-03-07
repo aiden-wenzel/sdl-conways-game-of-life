@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/aidenwen/projects/sdl-conways-game-of-life/build/src",
+  "command": "/usr/bin/cc  -I/home/aidenwen/projects/sdl-conways-game-of-life/./build/_deps/sdl-src/include -I/home/aidenwen/projects/sdl-conways-game-of-life/./build/_deps/unity-src/src -I/home/aidenwen/projects/sdl-conways-game-of-life/build/_deps/sdl-build/include-revision -I/home/aidenwen/projects/sdl-conways-game-of-life/build/_deps/sdl-src/include  -o CMakeFiles/main.dir/main.c.o -c /home/aidenwen/projects/sdl-conways-game-of-life/src/main.c",
+  "file": "/home/aidenwen/projects/sdl-conways-game-of-life/src/main.c"
+},
+{
+  "directory": "/home/aidenwen/projects/sdl-conways-game-of-life/build/test",
+  "command": "/usr/bin/cc  -I/home/aidenwen/projects/sdl-conways-game-of-life/./build/_deps/sdl-src/include -I/home/aidenwen/projects/sdl-conways-game-of-life/./build/_deps/unity-src/src  -o CMakeFiles/cell_test.dir/cell_test.c.o -c /home/aidenwen/projects/sdl-conways-game-of-life/test/cell_test.c",
+  "file": "/home/aidenwen/projects/sdl-conways-game-of-life/test/cell_test.c"
+}
+]
