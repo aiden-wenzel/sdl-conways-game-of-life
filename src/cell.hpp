@@ -15,5 +15,3 @@ public:
 private:
 	int alive;
 };
-
-void draw_cell(SDL_Renderer* renderer, float cell_dim, float x, float y);
