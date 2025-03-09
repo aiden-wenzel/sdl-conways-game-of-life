@@ -1,5 +1,6 @@
 #include <vector>
 
+
 #include "cell.hpp"
 #include "colony.hpp"
 
@@ -43,101 +44,106 @@ int Colony::get_num_rows() { return this->rows; }
 int Colony::get_num_cols() { return this->columns; }
 int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column]; }
 
-int Colony::find_num_alive_neighbors(int row, int column) {
-	int count = 0;
-	int last_column = this->columns-1;
-	int last_row = this->rows-1;
-	std::vector<int> cells;
+std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
+	std::vector<std::pair<int, int>> ans;
 
-	
 	bool top_boarder = row == 0;
 	bool bottom_boarder = row == this->rows-1;
 	bool left_boarder = column == 0;
 	bool right_boarder = column == this->columns-1;
 
-	// Top Left Corner
+	int last_column = this->columns-1;
+	int last_row = this->rows-1;
+
 	if (top_boarder && left_boarder) {
-		cells.push_back(this->cell_map[0][1]);
-		cells.push_back(this->cell_map[1][0]);
-		cells.push_back(this->cell_map[1][1]);
+		ans.push_back({0, 1});
+		ans.push_back({1, 0});
+		ans.push_back({1, 1});
 	}
-	
-	// Top Right Corner
-	else if (top_boarder && right_boarder) {
-		cells.push_back(this->cell_map[0][last_column-1]);
-		cells.push_back(this->cell_map[1][last_column-1]);
-		cells.push_back(this->cell_map[1][last_column]);
+
+	else if ( top_boarder && right_boarder) {
+		ans.push_back({0, last_column-1});
+		ans.push_back({1, last_column-1});
+		ans.push_back({1, last_column});
 	}
 
 	// Bottom Left Corner
 	else if (bottom_boarder && left_boarder) {
-		cells.push_back(this->cell_map[last_row-1][0]);
-		cells.push_back(this->cell_map[last_row-1][1]);
-		cells.push_back(this->cell_map[last_row][1]);
+		ans.push_back({last_row-1, 0});
+		ans.push_back({last_row-1, 1});
+		ans.push_back({last_row, 1});
 	}
 
 	// Bottom Right Corner
 	else if (bottom_boarder && right_boarder) {
-		cells.push_back(this->cell_map[last_row][last_column-1]);
-		cells.push_back(this->cell_map[last_row-1][last_column-1]);
-		cells.push_back(this->cell_map[last_row-1][last_column]);
+		ans.push_back({last_row, last_column-1});
+		ans.push_back({last_row-1, last_column-1});
+		ans.push_back({last_row-1, last_column});
 	}
-	
+
 	// Top Boarder
 	else if (top_boarder) {
-		cells.push_back(this->cell_map[0][column-1]);
-		cells.push_back(this->cell_map[0][column+1]);
+		ans.push_back({0, column-1});
+		ans.push_back({0, column+1});
 		int bottom_row = 1;
 		for (int i = 0; i < 3; i++) {
-			cells.push_back(this->cell_map[1][column-1+i]);
+			ans.push_back({1, column-1+i});
 		}
 	}
 
 	// Bottom Boarder
 	else if(bottom_boarder) {
-		cells.push_back(this->cell_map[last_row][column-1]);
-		cells.push_back(this->cell_map[last_row][column+1]);
+		ans.push_back({last_row, column-1});
+		ans.push_back({last_row, column+1});
 		int top_row = this->rows-2;
 		for (int i = 0; i < 3; i++) {
-			cells.push_back(this->cell_map[top_row][column-1+i]);
+			ans.push_back({top_row, column-1+i});
 		}
 	}
 
 	// Left Boarder
 	else if(left_boarder) {
-		cells.push_back(this->cell_map[row-1][0]);
-		cells.push_back(this->cell_map[row+1][0]);
+		ans.push_back({row-1, 0});
+		ans.push_back({row+1, 0});
 		int right_col = 1;
 		for (int i = 0; i < 3; i++) {
-			cells.push_back(this->cell_map[row-1+i][right_col]);
+			ans.push_back({row-1+i, right_col});
 		}
 	}
 
 	// Right Boarder
 	else if(right_boarder) {
-		cells.push_back(this->cell_map[row-1][0]);
-		cells.push_back(this->cell_map[row+1][0]);
+		ans.push_back({row-1, 0});
+		ans.push_back({row+1, 0});
 		int left_col = this->columns-2;
 		for (int i = 0; i < 3; i++) {
-			cells.push_back(this->cell_map[row-1+i][left_col]);
+			ans.push_back({row-1+i, left_col});
 		}
 	}
 	
 	// Not Boarder
 	else {
-		cells.push_back(this->cell_map[row][column-1]);
-		cells.push_back(this->cell_map[row][column+1]);
+		ans.push_back({row, column-1});
+		ans.push_back({row, column+1});
 		for (int i = 0; i < 3; i++) {
-			cells.push_back(this->cell_map[row+1][column-1+i]);
+			ans.push_back({row+1, column-1+i});
 		}
 		for (int i = 0; i < 3; i++) {
-			cells.push_back(this->cell_map[row-1][column-1+i]);
+			ans.push_back({row-1, column-1+i});
 		}
 	}
 
+	return ans;
+}
+
+int Colony::find_num_alive_neighbors(int row, int column) {
+
+	std::vector<std::pair<int, int>> choords = this->get_neighbors(row, column);	
+
 	// Count number of ones.
-	for (int i = 0; i < cells.size(); i++) {
-		if (cells[i] == 1) {
+	int count = 0;
+	for (int i = 0; i < choords.size(); i++) {
+		if (this->get_cell_at(choords[i].first, choords[i].second) == 1) {
 			count++;
 		}
 	}

@@ -14,6 +14,7 @@ public:
 	int get_num_cols();
 	int get_cell_at(int row, int column);
 
+	std::vector<std::pair<int, int>> get_neighbors(int row, int column); 
 	int find_num_alive_neighbors(int row, int column);
 
 	/*
