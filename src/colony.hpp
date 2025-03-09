@@ -8,12 +8,17 @@ public:
 	// Constructors
 	Colony(int screen_width_in, int screen_height_in);
 
+	// Getters
+	int getNumRows();
+	int getNumCols();
+	int getCellAt(int row, int column);
+
 private:
 	// Helper Functions
-	void initialize_cell_map();
+	void initializeCellMap();
 
 	// Member Variables
 	int rows;
 	int columns;
-	std::vector<std::vector<Cell>> cell_map;
+	std::vector<std::vector<int>> cellMap;
 };
