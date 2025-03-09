@@ -52,3 +52,23 @@ TEST(Colony, Set_Cell) {
 	colony.set_cell_at(2, 2, 1);
 	ASSERT_EQ(colony.get_cell_at(2, 2), 1);
 }
+
+TEST(Colony, Count_Num_Alive_Neighbors) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 1, 0, 1, 0},
+		{1, 1, 1, 1, 1},
+		{0, 1, 1, 0, 0},
+		{0, 0, 0, 1, 0},
+		{1, 1, 0, 1, 0}
+	};
+
+	Colony colony(bit_map);
+
+	int column, row;
+	int expected_count;
+
+	column = 0;
+	row = 0;
+	expected_count = 3;
+	ASSERT_EQ(colony.find_num_alive_neighbors(column, row), expected_count);
+}
