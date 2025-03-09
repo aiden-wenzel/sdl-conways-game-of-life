@@ -16,6 +16,11 @@ public:
 
 	int find_num_alive_neighbors(int row, int column);
 
+	/*
+	return true if cell at <row>, <column> should die.
+	*/
+	bool determine_fate(int row, int column);
+
 	// Setters
 	void set_cell_at(int row, int column, int value);
 
@@ -26,5 +31,8 @@ private:
 	// Member Variables
 	int rows;
 	int columns;
+	int overpopulation_limit;
+	int underpopulation_limit;
+	int resurection_limit;
 	std::vector<std::vector<int>> cell_map;
 };

@@ -7,12 +7,18 @@
 Colony::Colony(int screen_width_in, int screen_height_in, int cell_size) {
 	this->rows = screen_height_in/cell_size; 
 	this->columns = screen_width_in/cell_size;
+	this->underpopulation_limit = 2;
+	this->overpopulation_limit = 3;
+	this->resurection_limit = 3;
 	initialize_cell_map();
 }
 
 Colony::Colony(const std::vector<std::vector<int>>& bit_map) {
 	this->rows = bit_map.size();
 	this->columns = bit_map[0].size();
+	this->underpopulation_limit = 2;
+	this->overpopulation_limit = 3;
+	this->resurection_limit = 3;
 
 	initialize_cell_map();
 
@@ -137,6 +143,13 @@ int Colony::find_num_alive_neighbors(int row, int column) {
 	}
 
 	return count;
+}
+
+bool Colony::determine_fate(int row, int column) {
+	int alive_neighbors = this->find_num_alive_neighbors(row, column);
+	bool condition_1 = this->underpopulation_limit <= alive_neighbors;
+	bool condition_2 = alive_neighbors <= this->overpopulation_limit;
+	return !(condition_1 && condition_2);
 }
 
 // Setters

@@ -121,3 +121,32 @@ TEST(Colony, Count_Num_Alive_Neighbors) {
 	expected_count = 5;
 	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
 }
+
+TEST(Colony, determine_fate) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 1, 0, 1, 0},
+		{1, 1, 1, 1, 1},
+		{0, 1, 1, 0, 0},
+		{0, 0, 0, 1, 0},
+		{1, 1, 0, 0, 0}
+	};
+	
+	Colony colony(bit_map);
+
+	int row, column;
+	
+	// Cell should die by overpopulation.
+	row = 1;
+	column = 1;
+	ASSERT_TRUE(colony.determine_fate(row, column));
+
+	// Cell should die by underpopultion.
+	row = 4;
+	column = 4;
+	ASSERT_TRUE(colony.determine_fate(row, column));
+
+	// Cell should not be changed.
+	row = 4;
+	column = 2;
+	ASSERT_FALSE(colony.determine_fate(row, column));
+}
