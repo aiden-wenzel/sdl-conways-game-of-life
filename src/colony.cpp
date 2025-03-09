@@ -58,7 +58,7 @@ int Colony::find_num_alive_neighbors(int row, int column) {
 	
 	// Top Right Corner
 	else if (top_boarder && right_boarder) {
-		cells.push_back(this->cell_map[0][last_column]);
+		cells.push_back(this->cell_map[0][last_column-1]);
 		cells.push_back(this->cell_map[1][last_column-1]);
 		cells.push_back(this->cell_map[1][last_column]);
 	}
@@ -74,7 +74,7 @@ int Colony::find_num_alive_neighbors(int row, int column) {
 	else if (bottom_boarder && right_boarder) {
 		cells.push_back(this->cell_map[last_row][last_column-1]);
 		cells.push_back(this->cell_map[last_row-1][last_column-1]);
-		cells.push_back(this->cell_map[last_row][last_column-1]);
+		cells.push_back(this->cell_map[last_row-1][last_column]);
 	}
 	
 	// Top Boarder
@@ -89,8 +89,8 @@ int Colony::find_num_alive_neighbors(int row, int column) {
 
 	// Bottom Boarder
 	else if(bottom_boarder) {
-		cells.push_back(this->cell_map[0][column-1]);
-		cells.push_back(this->cell_map[0][column+1]);
+		cells.push_back(this->cell_map[last_row][column-1]);
+		cells.push_back(this->cell_map[last_row][column+1]);
 		int top_row = this->rows-2;
 		for (int i = 0; i < 3; i++) {
 			cells.push_back(this->cell_map[top_row][column-1+i]);
