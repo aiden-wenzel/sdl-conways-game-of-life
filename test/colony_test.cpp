@@ -23,6 +23,22 @@ TEST(Colony, Constructor_Basic) {
 	}
 }
 
+TEST(Colony, Constructor_Bit_Map) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 1, 0},
+		{1, 1, 1},
+		{1, 0, 0}
+	};
+
+	Colony colony(bit_map);
+
+	for (int i = 0; i < bit_map.size(); i++) {
+		for (int j = 0; j < bit_map[i].size(); j++) {
+			ASSERT_EQ(colony.get_cell_at(i, j), bit_map[i][j]);
+		}
+	}
+}
+
 TEST(Colony, Set_Cell) {
 	int screen_width = 3;
 	int screen_height = 3;
