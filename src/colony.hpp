@@ -9,13 +9,13 @@ public:
 	Colony(int screen_width_in, int screen_height_in);
 
 	// Getters
-	int getNumRows();
-	int getNumCols();
-	int getCellAt(int row, int column);
+	int get_num_rows();
+	int get_num_cols();
+	int get_cell_at(int row, int column);
 
 private:
 	// Helper Functions
-	void initializeCellMap();
+	void initialize_cell_map();
 
 	// Member Variables
 	int rows;

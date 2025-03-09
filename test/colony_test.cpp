@@ -9,12 +9,12 @@ int main(int argc, char **argv) {
 
 TEST(Constructor, basic) {
 	Colony colony(800, 400);
-	ASSERT_EQ(colony.getNumCols(), 800/2);
-	ASSERT_EQ(colony.getNumRows(), 400/2);
+	ASSERT_EQ(colony.get_num_cols(), 800/2);
+	ASSERT_EQ(colony.get_num_rows(), 400/2);
 	
-	for (int i = 0; i < colony.getNumRows(); i++) {
-		for (int j = 0; j < colony.getNumCols(); j++) {
-			ASSERT_EQ(colony.getCellAt(i, j), 0);
+	for (int i = 0; i < colony.get_num_rows(); i++) {
+		for (int j = 0; j < colony.get_num_cols(); j++) {
+			ASSERT_EQ(colony.get_cell_at(i, j), 0);
 		}
 	}
 }
