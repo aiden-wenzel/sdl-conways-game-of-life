@@ -150,3 +150,17 @@ TEST(Colony, determine_fate) {
 	column = 2;
 	ASSERT_FALSE(colony.determine_fate(row, column));
 }
+
+TEST(Colony, initialize_cells_to_investigate) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0},
+		{0, 1, 1, 0, 0}
+	};
+
+	int num_ones = 2;
+	int num_adjacent = 6;
+	Colony colony(bit_map);
+	ASSERT_EQ(colony.get_cell_stack_size(), num_ones+num_adjacent);
+}
