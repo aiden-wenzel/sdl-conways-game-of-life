@@ -1,7 +1,17 @@
 #pragma once
 #include <vector>
+#include <unordered_set>
 
 class Cell;
+
+struct PairHash {
+public:
+	template <typename T, typename U>
+		std::size_t operator()(const std::pair<T, U> &x) const
+		{
+			return std::hash<T>()(x.first) ^ std::hash<U>()(x.second);
+		}
+};
 
 class Colony {
 public:
@@ -13,6 +23,7 @@ public:
 	int get_num_rows();
 	int get_num_cols();
 	int get_cell_at(int row, int column);
+	int get_cell_stack_size();
 
 	/**
 	 * Return the choordinates of adjacent cells as {row, column}.
@@ -49,6 +60,12 @@ public:
 	void set_cell_at(int row, int column, int value);
 
 private:
+	/**
+	 * Goes through entire cell map and adds both
+	 * cells with the value 1 and their adjacent neighbors to the cell stack.
+	 */
+	void initialize_cells_to_inspect();
+
 	void initialize_cell_map();
 
 	// Map Variables
@@ -60,4 +77,7 @@ private:
 	int overpopulation_limit;
 	int underpopulation_limit;
 	int resurection_limit;
+
+	// Containers
+	std::unordered_set<std::pair<int, int>, PairHash> cells_to_inspect;
 };

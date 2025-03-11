@@ -12,6 +12,7 @@ Colony::Colony(int screen_width_in, int screen_height_in, int cell_size) {
 	this->overpopulation_limit = 3;
 	this->resurection_limit = 3;
 	initialize_cell_map();
+	initialize_cells_to_inspect();
 }
 
 Colony::Colony(const std::vector<std::vector<int>>& bit_map) {
@@ -28,6 +29,8 @@ Colony::Colony(const std::vector<std::vector<int>>& bit_map) {
 			this->cell_map[i][j] = bit_map[i][j];
 		}
 	}
+
+	initialize_cells_to_inspect();
 }
 
 void Colony::initialize_cell_map() {
@@ -39,10 +42,24 @@ void Colony::initialize_cell_map() {
 	}
 }
 
+void Colony::initialize_cells_to_inspect() {
+	std::vector<std::pair<int, int>> tmp;
+	for (int row = 0; row < this->rows; row++) {
+		for (int col = 0; col < this->columns; col++) {
+			if (this->cell_map[row][col] == 1) {
+				this->cells_to_inspect.insert({row, col});
+				tmp = this->get_neighbors(row, col);
+				this->cells_to_inspect.insert(tmp.begin(), tmp.end());
+			}
+		}
+	}
+}
+
 // Getters
 int Colony::get_num_rows() { return this->rows; }
 int Colony::get_num_cols() { return this->columns; }
 int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column]; }
+int Colony::get_cell_stack_size() {return this->cells_to_inspect.size();}
 
 std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
 	std::vector<std::pair<int, int>> ans;
