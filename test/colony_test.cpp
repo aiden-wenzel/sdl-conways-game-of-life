@@ -138,17 +138,17 @@ TEST(Colony, determine_fate) {
 	// Cell should die by overpopulation.
 	row = 1;
 	column = 1;
-	ASSERT_TRUE(colony.determine_fate(row, column));
+	ASSERT_TRUE(colony.kill_cell(row, column));
 
-	// Cell should die by underpopultion.
+	// Cell should not be changed.
 	row = 4;
 	column = 4;
-	ASSERT_TRUE(colony.determine_fate(row, column));
+	ASSERT_FALSE(colony.kill_cell(row, column) || colony.resurect_cell(row, column));
 
 	// Cell should not be changed.
 	row = 4;
 	column = 2;
-	ASSERT_FALSE(colony.determine_fate(row, column));
+	ASSERT_FALSE(colony.kill_cell(row, column) || colony.resurect_cell(row, column));
 }
 
 TEST(Colony, initialize_cells_to_investigate) {
@@ -163,4 +163,18 @@ TEST(Colony, initialize_cells_to_investigate) {
 	int num_adjacent = 6;
 	Colony colony(bit_map);
 	ASSERT_EQ(colony.get_cell_stack_size(), num_ones+num_adjacent);
+}
+
+TEST(Colony, kill_resurect_cell) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0},
+		{0, 1, 1, 0, 0}
+	};
+
+	Colony colony(bit_map);
+
+	ASSERT_TRUE(colony.kill_cell(3, 1) && colony.kill_cell(3, 2));
+	ASSERT_FALSE(colony.kill_cell(2, 1));
 }
