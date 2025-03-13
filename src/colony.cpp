@@ -168,11 +168,18 @@ int Colony::find_num_alive_neighbors(int row, int column) {
 	return count;
 }
 
-bool Colony::determine_fate(int row, int column) {
+bool Colony::kill_cell(int row, int column) {
 	int alive_neighbors = this->find_num_alive_neighbors(row, column);
+	int current_status = this->cell_map[row][column];
 	bool condition_1 = this->underpopulation_limit <= alive_neighbors;
 	bool condition_2 = alive_neighbors <= this->overpopulation_limit;
-	return !(condition_1 && condition_2);
+	return !(condition_1 && condition_2) && current_status == 1;
+}
+
+bool Colony::resurect_cell(int row, int column) {
+	int alive_neighbors = this->find_num_alive_neighbors(row, column);
+	int current_status = this->cell_map[row][column];
+	return alive_neighbors == this->resurection_limit && current_status == 0;
 }
 
 // Setters

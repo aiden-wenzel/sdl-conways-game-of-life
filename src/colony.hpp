@@ -56,6 +56,8 @@ public:
 	 * @return true if the cell should die.
 	 */
 	bool determine_fate(int row, int column);
+	bool kill_cell(int row, int column);
+	bool resurect_cell(int row, int column);
 
 	/*----------Setters----------*/
 	void set_cell_at(int row, int column, int value);
