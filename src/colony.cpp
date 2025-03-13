@@ -59,7 +59,7 @@ void Colony::initialize_cells_to_inspect() {
 int Colony::get_num_rows() { return this->rows; }
 int Colony::get_num_cols() { return this->columns; }
 int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column]; }
-int Colony::get_cell_stack_size() {return this->cells_to_inspect.size();}
+int Colony::get_num_cells_to_investigate() {return this->cells_to_inspect.size();}
 int Colony::get_num_cells_to_kill() {return this->cells_to_kill.size();}
 int Colony::get_num_cells_to_resurect() {return this->cells_to_resurect.size();}
 

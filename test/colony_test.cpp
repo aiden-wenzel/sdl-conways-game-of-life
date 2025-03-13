@@ -162,7 +162,7 @@ TEST(Colony, initialize_cells_to_investigate) {
 	int num_ones = 2;
 	int num_adjacent = 6;
 	Colony colony(bit_map);
-	ASSERT_EQ(colony.get_cell_stack_size(), num_ones+num_adjacent);
+	ASSERT_EQ(colony.get_num_cells_to_investigate(), num_ones+num_adjacent);
 }
 
 TEST(Colony, kill_resurect_cell) {
@@ -191,5 +191,5 @@ TEST(Colony, add_cells_to_containers) {
 	colony.add_cells_to_containers();
 	ASSERT_EQ(colony.get_num_cells_to_kill(), 2);
 	ASSERT_EQ(colony.get_num_cells_to_resurect(), 0);
-	ASSERT_EQ(colony.get_cell_stack_size(), 0);
+	ASSERT_EQ(colony.get_num_cells_to_investigate(), 0);
 }

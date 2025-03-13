@@ -24,7 +24,7 @@ public:
 	int get_num_rows();
 	int get_num_cols();
 	int get_cell_at(int row, int column);
-	int get_cell_stack_size();
+	int get_num_cells_to_investigate();
 	int get_num_cells_to_kill();
 	int get_num_cells_to_resurect();
 
