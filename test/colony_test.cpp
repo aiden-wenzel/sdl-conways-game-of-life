@@ -178,3 +178,18 @@ TEST(Colony, kill_resurect_cell) {
 	ASSERT_TRUE(colony.kill_cell(3, 1) && colony.kill_cell(3, 2));
 	ASSERT_FALSE(colony.kill_cell(2, 1));
 }
+
+TEST(Colony, add_cells_to_containers) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0},
+		{0, 1, 1, 0, 0}
+	};
+
+	Colony colony(bit_map);
+	colony.add_cells_to_containers();
+	ASSERT_EQ(colony.get_num_cells_to_kill(), 2);
+	ASSERT_EQ(colony.get_num_cells_to_resurect(), 0);
+	ASSERT_EQ(colony.get_cell_stack_size(), 0);
+}
