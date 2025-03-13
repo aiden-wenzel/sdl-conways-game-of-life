@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <unordered_set>
+#include <queue>
 
 class Cell;
 
@@ -80,4 +81,6 @@ private:
 
 	// Containers
 	std::unordered_set<std::pair<int, int>, PairHash> cells_to_inspect;
+	std::queue<std::pair<int, int>> cells_to_kill;
+	std::queue<std::pair<int, int>> cells_to_resurect;
 };
