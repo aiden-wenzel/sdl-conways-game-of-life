@@ -25,6 +25,8 @@ public:
 	int get_num_cols();
 	int get_cell_at(int row, int column);
 	int get_cell_stack_size();
+	int get_num_cells_to_kill();
+	int get_num_cells_to_resurect();
 
 	/**
 	 * Return the choordinates of adjacent cells as {row, column}.
@@ -47,17 +49,9 @@ public:
 	 */
 	int find_num_alive_neighbors(int row, int column);
 
-	/**
-	 * Retrun true if the cell at (row, column) should die.
-	 * 
-	 * @param row Row of the cell.
-	 * @param column Column of the cell.
-	 * 
-	 * @return true if the cell should die.
-	 */
-	bool determine_fate(int row, int column);
 	bool kill_cell(int row, int column);
 	bool resurect_cell(int row, int column);
+	void add_cells_to_containers();
 
 	/*----------Setters----------*/
 	void set_cell_at(int row, int column, int value);

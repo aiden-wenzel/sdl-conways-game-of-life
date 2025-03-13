@@ -60,6 +60,8 @@ int Colony::get_num_rows() { return this->rows; }
 int Colony::get_num_cols() { return this->columns; }
 int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column]; }
 int Colony::get_cell_stack_size() {return this->cells_to_inspect.size();}
+int Colony::get_num_cells_to_kill() {return this->cells_to_kill.size();}
+int Colony::get_num_cells_to_resurect() {return this->cells_to_resurect.size();}
 
 std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
 	std::vector<std::pair<int, int>> ans;
@@ -180,6 +182,20 @@ bool Colony::resurect_cell(int row, int column) {
 	int alive_neighbors = this->find_num_alive_neighbors(row, column);
 	int current_status = this->cell_map[row][column];
 	return alive_neighbors == this->resurection_limit && current_status == 0;
+}
+
+void Colony::add_cells_to_containers() {
+	auto begin = this->cells_to_inspect.begin();
+	auto end = this->cells_to_inspect.end();
+	for (auto it = begin; it != end; it++) {
+		if (resurect_cell(it->first, it->second)) {
+			this->cells_to_resurect.push(*it);
+		}	
+		else if (kill_cell(it->first, it->second)) {
+			this->cells_to_kill.push(*it);
+		}
+	}
+	this->cells_to_inspect.clear();
 }
 
 // Setters
