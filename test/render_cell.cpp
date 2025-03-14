@@ -1,7 +1,6 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 
-#include "cell.hpp"
 #include "SDL_Utils.hpp"
 
 const float height = 400;

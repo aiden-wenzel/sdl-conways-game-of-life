@@ -1,7 +1,6 @@
 #include <vector>
 
 
-#include "cell.hpp"
 #include "colony.hpp"
 
 // Constructor

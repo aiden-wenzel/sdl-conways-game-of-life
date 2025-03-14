@@ -1,5 +1,4 @@
 add_library(game_of_life STATIC 
-	"cell.cpp"
 	"colony.cpp"
 )
 

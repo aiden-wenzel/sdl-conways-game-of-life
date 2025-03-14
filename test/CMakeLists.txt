@@ -1,7 +1,3 @@
-add_executable(cell_test cell_test.cpp)
-target_link_libraries(cell_test gtest_main game_of_life)
-add_test(cell_test cell_test)
-
 add_executable(colony_test colony_test.cpp)
 target_link_libraries(colony_test gtest_main game_of_life)
 add_test(colony_test colony_test)
