@@ -191,20 +191,6 @@ bool Colony::resurect_cell(int row, int column) {
 	return alive_neighbors == this->resurection_limit && current_status == 0;
 }
 
-void Colony::add_cells_to_containers() {
-	auto begin = this->cells_to_inspect.begin();
-	auto end = this->cells_to_inspect.end();
-	for (auto it = begin; it != end; it++) {
-		if (resurect_cell(it->first, it->second)) {
-			this->cells_to_resurect.push(*it);
-		}	
-		else if (kill_cell(it->first, it->second)) {
-			this->cells_to_kill.push(*it);
-		}
-	}
-	this->cells_to_inspect.clear();
-}
-
 void Colony::kill_cells() {
 	while(!this->cells_to_kill.empty()) {
 		std::pair<int, int> choord = this->cells_to_kill.front();
