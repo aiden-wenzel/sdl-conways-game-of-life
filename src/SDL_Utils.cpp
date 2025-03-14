@@ -42,7 +42,6 @@ void erase_cell(SDL_Renderer* renderer, float cell_dim, float x, float y) {
 }
 
 void draw_colony(SDL_Renderer* renderer, Colony* colony) {	
-	std::cout << "drawing colony\n";
 	float cell_size = (float)colony->get_cell_size();
 	for (int i = 0; i < colony->get_num_rows(); i++) {
 		for (int j = 0; j < colony->get_num_cols(); j++) {
