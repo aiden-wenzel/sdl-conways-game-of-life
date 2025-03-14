@@ -1,4 +1,5 @@
 #include <SDL3/SDL.h>
+#include <iostream>
 
 #include "cell.hpp"
 #include "SDL_Utils.hpp"
@@ -10,8 +11,14 @@ int main() {
 	SDL_Window* window = initializeWindow(height, width);
 	SDL_Renderer* renderer = initializeRenderer(window);
 	
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
 	draw_cell(renderer, 20, width/2, height/2);
+	SDL_RenderPresent(renderer);
+	
+	std::string dummy;
+	std::cout << "Erase Cell?\n";
+	std::cin >> dummy;
+
+	erase_cell(renderer, 20, width/2, height/2);
 	SDL_RenderPresent(renderer);
 
 	int quit = 0;

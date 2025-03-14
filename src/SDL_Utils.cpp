@@ -2,8 +2,9 @@
 #include <SDL3/SDL.h>
 
 #include "SDL_Utils.hpp"
+#include "colony.hpp"
 
-SDL_Window* initializeWindow(int width, int height) {
+SDL_Window* initializeWindow(float width, float height) {
 	// Create an SDL window
 	SDL_Window* window = SDL_CreateWindow("Simple SDL2 Window",
 			width, height, 0);
@@ -29,6 +30,26 @@ SDL_Renderer* initializeRenderer(SDL_Window* window) {
 }
 
 void draw_cell(SDL_Renderer* renderer, float cell_dim, float x, float y) {
-	SDL_FRect cell = {x, y, cell_dim, cell_dim};
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+	SDL_FRect cell = {y, x, cell_dim, cell_dim};
 	SDL_RenderFillRect(renderer, &cell);
+}
+
+void erase_cell(SDL_Renderer* renderer, float cell_dim, float x, float y) {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_FRect cell = {y, x, cell_dim, cell_dim};
+	SDL_RenderFillRect(renderer, &cell);
+}
+
+void draw_colony(SDL_Renderer* renderer, Colony* colony) {	
+	std::cout << "drawing colony\n";
+	float cell_size = (float)colony->get_cell_size();
+	for (int i = 0; i < colony->get_num_rows(); i++) {
+		for (int j = 0; j < colony->get_num_cols(); j++) {
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+			if (colony->get_cell_at(i, j) == 1) {
+				draw_cell(renderer,	cell_size, i*cell_size, j*cell_size);
+			}
+		}
+	}
 }

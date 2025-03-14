@@ -4,6 +4,7 @@
 #include <queue>
 
 class Cell;
+class SDL_Renderer;
 
 struct PairHash {
 public:
@@ -27,6 +28,7 @@ public:
 	int get_num_cells_to_investigate();
 	int get_num_cells_to_kill();
 	int get_num_cells_to_resurect();
+	int get_cell_size();
 
 	/**
 	 * Return the choordinates of adjacent cells as {row, column}.
@@ -57,19 +59,20 @@ public:
 
 	/*----------Setters----------*/
 	void set_cell_at(int row, int column, int value);
+	void initialize_cells_to_inspect();
 
 private:
 	/**
 	 * Goes through entire cell map and adds both
 	 * cells with the value 1 and their adjacent neighbors to the cell stack.
 	 */
-	void initialize_cells_to_inspect();
 
 	void initialize_cell_map();
 
 	// Map Variables
 	int rows;
 	int columns;
+	int cell_size;
 	std::vector<std::vector<int>> cell_map;
 	
 	// Game Rules
@@ -81,4 +84,7 @@ private:
 	std::unordered_set<std::pair<int, int>, PairHash> cells_to_inspect;
 	std::queue<std::pair<int, int>> cells_to_kill;
 	std::queue<std::pair<int, int>> cells_to_resurect;
+
+	friend void update_cells(SDL_Renderer* renderer, Colony* colony);
+	friend void draw_colony(SDL_Renderer* renderer, Colony* colony); 
 };

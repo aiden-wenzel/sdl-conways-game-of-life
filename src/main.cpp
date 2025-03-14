@@ -5,8 +5,8 @@
 
 #include "SDL_Utils.hpp"
 
-const int WIDTH = 800;
-const int HEIGHT = 600;
+const float WIDTH = 800;
+const float HEIGHT = 600;
 
 SDL_Window* initializeWindow(int width, int height); 
 SDL_Renderer* initializeRenderer(SDL_Window* window);

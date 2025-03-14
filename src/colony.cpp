@@ -6,6 +6,7 @@
 
 // Constructor
 Colony::Colony(int screen_width_in, int screen_height_in, int cell_size) {
+	this->cell_size = cell_size;
 	this->rows = screen_height_in/cell_size; 
 	this->columns = screen_width_in/cell_size;
 	this->underpopulation_limit = 2;
@@ -62,6 +63,7 @@ int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column
 int Colony::get_num_cells_to_investigate() {return this->cells_to_inspect.size();}
 int Colony::get_num_cells_to_kill() {return this->cells_to_kill.size();}
 int Colony::get_num_cells_to_resurect() {return this->cells_to_resurect.size();}
+int Colony::get_cell_size() {return this->cell_size;}
 
 std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
 	std::vector<std::pair<int, int>> ans;
@@ -199,24 +201,25 @@ void Colony::add_cells_to_containers() {
 }
 
 void Colony::kill_cells() {
-	std::vector<std::pair<int, int>> inspect;
 	while(!this->cells_to_kill.empty()) {
 		std::pair<int, int> choord = this->cells_to_kill.front();
 		this->cell_map[choord.first][choord.second] = 0;
 		this->cells_to_kill.pop();
+	}
+}
+
+void Colony::resurect_cells() {
+	std::vector<std::pair<int, int>> inspect;
+	while (!this->cells_to_resurect.empty()) {
+		std::pair<int, int> choord = this->cells_to_resurect.front();
+		this->cell_map[choord.first][choord.second] = 1;
+		this->cells_to_resurect.pop();
+
 		inspect = this->get_neighbors(choord.first, choord.second);
 
 		for (int i = 0; i < inspect.size(); i++) {
 			this->cells_to_inspect.insert(inspect[i]);
 		}
-	}
-}
-
-void Colony::resurect_cells() {
-	while (!this->cells_to_resurect.empty()) {
-		std::pair<int, int> choord = this->cells_to_resurect.front();
-		this->cell_map[choord.first][choord.second] = 1;
-		this->cells_to_resurect.pop();
 	}
 }
 // Setters
