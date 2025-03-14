@@ -198,6 +198,27 @@ void Colony::add_cells_to_containers() {
 	this->cells_to_inspect.clear();
 }
 
+void Colony::kill_cells() {
+	std::vector<std::pair<int, int>> inspect;
+	while(!this->cells_to_kill.empty()) {
+		std::pair<int, int> choord = this->cells_to_kill();
+		this->cell_map[choord.first][choord.second] = 0;
+		this->cells_to_kill.pop();
+		inspect = this->get_neighbors(choord.first, choord.second);
+
+		for (int i = 0; i < inspect.size(); i++) {
+			this->cells_to_inspect.insert(inspect[i]);
+		}
+	}
+}
+
+void Colony::resurect_cells() {
+	while (!this->cells_to_resurect.empty()) {
+		std::pair<int, int> choord = this->cells_to_resurect();
+		this->cell_map[choord.first][choord.second] = 1;
+		this->cells_to_resurect.pop();
+	}
+}
 // Setters
 void Colony::set_cell_at(int row, int column, int value) {
 	this->cell_map[row][column] = value;
