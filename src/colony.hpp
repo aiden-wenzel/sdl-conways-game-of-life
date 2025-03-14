@@ -61,6 +61,7 @@ public:
 	void resurect_cells();
 
 	void initialize_cells_to_inspect();
+	void update_colony();
 
 private:
 	/**

@@ -201,20 +201,41 @@ TEST(Colony, kill_and_resurect_cells) {
 		{0, 1, 1},
 	};
 
-	std::vector<std::vector<int>> next = {
+	std::vector<std::vector<int>> next_1 = {
 		{0, 1, 0},
 		{1, 0, 1},
 		{1, 0, 1},
 	};
 
-	Colony colony(bit_map);
-	colony.add_cells_to_containers();
-	colony.kill_cells();
-	colony.resurect_cells();
+	std::vector<std::vector<int>> next_2 = {
+		{0, 1, 0},
+		{1, 0, 1},
+		{0, 0, 0},
+	};
 
-	for (int row = 0; row < 3; row++) {
-		for (int col = 0; col < 3; col++) {
-			ASSERT_EQ(colony.get_cell_at(row, col), next[row][col]);
+	std::vector<std::vector<int>> next_3 = {
+		{0, 1, 0},
+		{0, 1, 0},
+		{0, 0, 0},
+	};
+
+	std::vector<std::vector<int>> next_4 = {
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+	Colony colony(bit_map);
+	using std::vector;
+	vector<vector<vector<int>>> order = {bit_map, next_1, next_2, next_3, next_4};
+
+	for (int i = 0; i < order.size(); i++) {
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++) {
+				ASSERT_EQ(colony.get_cell_at(row, col), order[i][row][col]);
+			}
 		}
+		colony.update_colony();
 	}
 }
+

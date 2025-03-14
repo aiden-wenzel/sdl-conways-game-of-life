@@ -227,3 +227,18 @@ void Colony::resurect_cells() {
 		}
 	}
 }
+
+void Colony::update_colony() {
+	for (int i = 0; i < this->rows; i++) {
+		for (int j = 0; j < this->columns; j++) {
+			if (resurect_cell(i, j)) {
+				this->cells_to_resurect.push({i, j});
+			}
+			else if (kill_cell(i, j)) {
+				this->cells_to_kill.push({i, j});
+			}
+		}
+	}
+	this->kill_cells();
+	this->resurect_cells();
+}
