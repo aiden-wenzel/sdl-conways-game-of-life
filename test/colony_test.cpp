@@ -193,3 +193,28 @@ TEST(Colony, add_cells_to_containers) {
 	ASSERT_EQ(colony.get_num_cells_to_resurect(), 0);
 	ASSERT_EQ(colony.get_num_cells_to_investigate(), 0);
 }
+
+TEST(Colony, kill_and_resurect_cells) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 0, 0},
+		{1, 1, 1},
+		{0, 1, 1},
+	};
+
+	std::vector<std::vector<int>> next = {
+		{0, 1, 0},
+		{1, 0, 1},
+		{1, 0, 1},
+	};
+
+	Colony colony(bit_map);
+	colony.add_cells_to_containers();
+	colony.kill_cells();
+	colony.resurect_cells();
+
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
+			ASSERT_EQ(colony.get_cell_at(row, col), next[row][col]);
+		}
+	}
+}
