@@ -71,55 +71,55 @@ TEST(Colony, Count_Num_Alive_Neighbors) {
 	column = 0;
 	row = 0;
 	expected_count = 3;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 
 	// Top Right
 	column = 4;
 	row = 0;
 	expected_count = 3;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 	
 	// Bottom Left
 	column = 0;
 	row = 4;
 	expected_count = 1;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 
 	// Bottom Right
 	column = 4;
 	row = 4;
 	expected_count = 2;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 
 	// Top Boarder
 	column = 1;
 	row = 0;
 	expected_count = 3;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 	
 	// Bottom Boarder
 	column = 1;
 	row = 4;
 	expected_count = 1;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 
 	// Left Boarder
 	column = 0;
 	row = 1;
 	expected_count = 3;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 
 	// Right Boarder
 	column = 4;
 	row = 1;
 	expected_count = 2;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 
 	// General Case
 	column = 2;
 	row = 2;
 	expected_count = 5;
-	ASSERT_EQ(colony.find_num_alive_neighbors(row, column), expected_count);
+	ASSERT_EQ(colony.get_num_alive_neighbors(row, column), expected_count);
 }
 
 TEST(Colony, determine_fate) {

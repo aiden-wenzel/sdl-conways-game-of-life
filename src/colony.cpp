@@ -3,7 +3,7 @@
 
 #include "colony.hpp"
 
-// Constructor
+/*----------Constructors----------*/
 Colony::Colony(int screen_width_in, int screen_height_in, int cell_size) {
 	this->cell_size = cell_size;
 	this->rows = screen_height_in/cell_size; 
@@ -55,7 +55,7 @@ void Colony::initialize_cells_to_inspect() {
 	}
 }
 
-// Getters
+/*----------Getters----------*/
 int Colony::get_num_rows() { return this->rows; }
 int Colony::get_num_cols() { return this->columns; }
 int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column]; }
@@ -156,7 +156,7 @@ std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
 	return ans;
 }
 
-int Colony::find_num_alive_neighbors(int row, int column) {
+int Colony::get_num_alive_neighbors(int row, int column) {
 
 	std::vector<std::pair<int, int>> choords = this->get_neighbors(row, column);	
 
@@ -171,8 +171,14 @@ int Colony::find_num_alive_neighbors(int row, int column) {
 	return count;
 }
 
+/*----------Setters----------*/
+void Colony::set_cell_at(int row, int column, int value) {
+	this->cell_map[row][column] = value;
+}
+
+
 bool Colony::kill_cell(int row, int column) {
-	int alive_neighbors = this->find_num_alive_neighbors(row, column);
+	int alive_neighbors = this->get_num_alive_neighbors(row, column);
 	int current_status = this->cell_map[row][column];
 	bool condition_1 = this->underpopulation_limit <= alive_neighbors;
 	bool condition_2 = alive_neighbors <= this->overpopulation_limit;
@@ -180,7 +186,7 @@ bool Colony::kill_cell(int row, int column) {
 }
 
 bool Colony::resurect_cell(int row, int column) {
-	int alive_neighbors = this->find_num_alive_neighbors(row, column);
+	int alive_neighbors = this->get_num_alive_neighbors(row, column);
 	int current_status = this->cell_map[row][column];
 	return alive_neighbors == this->resurection_limit && current_status == 0;
 }
@@ -220,8 +226,4 @@ void Colony::resurect_cells() {
 			this->cells_to_inspect.insert(inspect[i]);
 		}
 	}
-}
-// Setters
-void Colony::set_cell_at(int row, int column, int value) {
-	this->cell_map[row][column] = value;
 }

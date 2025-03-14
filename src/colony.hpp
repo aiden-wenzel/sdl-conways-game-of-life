@@ -30,6 +30,9 @@ public:
 	int get_num_cells_to_resurect();
 	int get_cell_size();
 
+	/*----------Setters----------*/
+	void set_cell_at(int row, int column, int value);
+
 	/**
 	 * Return the choordinates of adjacent cells as {row, column}.
 	 *
@@ -49,7 +52,7 @@ public:
 	 *
 	 * @return integer sum of alive cells.
 	 */
-	int find_num_alive_neighbors(int row, int column);
+	int get_num_alive_neighbors(int row, int column);
 
 	bool kill_cell(int row, int column);
 	bool resurect_cell(int row, int column);
@@ -57,8 +60,6 @@ public:
 	void kill_cells();
 	void resurect_cells();
 
-	/*----------Setters----------*/
-	void set_cell_at(int row, int column, int value);
 	void initialize_cells_to_inspect();
 
 private:
