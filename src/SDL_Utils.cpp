@@ -50,6 +50,9 @@ void draw_colony(SDL_Renderer* renderer, Colony* colony) {
 			if (colony->get_cell_at(i, j) == 1) {
 				draw_cell(renderer,	cell_size, i*cell_size, j*cell_size);
 			}
+			else if(colony->get_cell_at(i, j) == 0) {
+				erase_cell(renderer, cell_size, i*cell_size, j*cell_size);
+			}
 		}
 	}
 }
