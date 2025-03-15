@@ -7,3 +7,6 @@ target_link_libraries(render_cell_test PUBLIC game_of_life PRIVATE SDL3::SDL3)
 
 add_executable(game_test game_test.cpp ../src/SDL_Utils.cpp)
 target_link_libraries(game_test PUBLIC game_of_life PRIVATE SDL3::SDL3)
+
+add_executable(mouse_test mouse_input_test.cpp ../src/SDL_Utils.cpp)
+target_link_libraries(mouse_test PUBLIC game_of_life PRIVATE SDL3::SDL3)

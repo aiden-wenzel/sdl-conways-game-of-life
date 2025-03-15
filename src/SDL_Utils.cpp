@@ -55,3 +55,7 @@ void draw_colony(SDL_Renderer* renderer, Colony* colony) {
 		}
 	}
 }
+
+std::pair<int, int> get_mouse_pos(SDL_Event* event) {
+	return {event->motion.x, event->motion.y};
+}
