@@ -2,6 +2,7 @@ add_library(game_of_life STATIC
 	"colony.cpp"
 	"SDL_Utils.cpp"
 	"mouse.cpp"
+	"game.cpp"
 )
 
 target_link_libraries(game_of_life SDL3::SDL3)

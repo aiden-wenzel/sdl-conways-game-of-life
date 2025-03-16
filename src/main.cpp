@@ -6,6 +6,7 @@
 #include "SDL_Utils.hpp"
 #include "colony.hpp"
 #include "mouse.hpp"
+#include "game.hpp"
 
 const float WIDTH = 1080;
 const float HEIGHT = 920;
@@ -16,9 +17,7 @@ int main() {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 		return -1;
 	}
-
-	SDL_Window* window = initializeWindow(WIDTH, HEIGHT);
-	SDL_Renderer* renderer = initializeRenderer(window);
+	Game game(WIDTH, HEIGHT);
 
 	Colony colony(HEIGHT/cell_size, WIDTH/cell_size);
 
@@ -39,26 +38,26 @@ int main() {
 				mouse_pos = get_mouse_pos(&event);
 			}
 			else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN && in_start) {
-				draw_cells(renderer, mouse_pos, &colony, cell_size);
+				draw_cells(game.get_renderer(), mouse_pos, &colony, cell_size);
 				if (0 <= mouse_pos.first && mouse_pos.first <= 80 && 0 <= mouse_pos.second && mouse_pos.second <=40 ) {
 					in_start = false;
 				}
 			}
 		}
 
-		draw_colony(renderer, &colony, cell_size);	
+		draw_colony(game.get_renderer(), &colony, cell_size);	
 		if (!in_start) {
 			colony.update_colony();
 		}
 
 		else {
-			render_start_button(renderer, {0, 0}, {80, 40});		
-			render_mouse_cell(renderer, mouse_pos, cell_size);
+			render_start_button(game.get_renderer(), {0, 0}, {80, 40});		
+			render_mouse_cell(game.get_renderer(), mouse_pos, cell_size);
 		}
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(game.get_renderer());
 	}
 	
-	SDL_DestroyWindow(window);
+	SDL_DestroyWindow(game.get_window());
 	SDL_Quit();
 
 	return 0;
