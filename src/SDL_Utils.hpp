@@ -9,5 +9,3 @@ void draw_cell(SDL_Renderer* renderer, float cell_dim, float x, float y);
 void erase_cell(SDL_Renderer* renderer, float cell_dim, float x, float y);
 
 void draw_colony(SDL_Renderer* renderer, Colony* colony);
-
-std::pair<int, int> get_mouse_pos(SDL_Event* event);
