@@ -40,12 +40,19 @@ int main() {
 			}
 			else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN && in_start) {
 				draw_cells(renderer, mouse_pos, &colony, cell_size);
+				if (0 <= mouse_pos.first && mouse_pos.first <= 80 && 0 <= mouse_pos.second && mouse_pos.second <=40 ) {
+					in_start = false;
+				}
 			}
 		}
 
 		draw_colony(renderer, &colony, cell_size);	
 		if (in_start) {
+			render_start_button(renderer, {0, 0}, {80, 40});		
 			render_mouse_cell(renderer, mouse_pos, cell_size);
+		}
+		else {
+
 		}
 		SDL_RenderPresent(renderer);
 	}
