@@ -20,7 +20,6 @@ SDL_Renderer* initializeRenderer(SDL_Window* window) {
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, "gpu");
 
 	if (renderer == NULL) {
-		printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 		std::cout << "Renderer could not be created! SDL_Error:" << SDL_GetError() << "\n";
 		SDL_Quit();
 		exit(-2);
@@ -30,13 +29,13 @@ SDL_Renderer* initializeRenderer(SDL_Window* window) {
 }
 
 void draw_cell(SDL_Renderer* renderer, float cell_dim, float x, float y) {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_FRect cell = {y, x, cell_dim, cell_dim};
 	SDL_RenderFillRect(renderer, &cell);
 }
 
 void erase_cell(SDL_Renderer* renderer, float cell_dim, float x, float y) {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
 	SDL_FRect cell = {y, x, cell_dim, cell_dim};
 	SDL_RenderFillRect(renderer, &cell);
 }
