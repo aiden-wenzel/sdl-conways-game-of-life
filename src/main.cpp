@@ -4,12 +4,12 @@
 #include <SDL3/SDL_main.h>
 
 #include "SDL_Utils.hpp"
+#include "colony.hpp"
+#include "mouse.hpp"
 
 const float WIDTH = 800;
 const float HEIGHT = 600;
-
-SDL_Window* initializeWindow(int width, int height); 
-SDL_Renderer* initializeRenderer(SDL_Window* window);
+const float cell_size = 10;
 
 int main() {
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -19,6 +19,21 @@ int main() {
 
 	SDL_Window* window = initializeWindow(WIDTH, HEIGHT);
 	SDL_Renderer* renderer = initializeRenderer(window);
+
+	Colony colony(HEIGHT/cell_size, WIDTH/cell_size);
+	std::vector<std::vector<int>> bit_map = {
+		{1, 1, 1},
+		{1, 0, 1},
+		{1, 0, 1},
+	};
+	int offset = 15;
+	for (int i = 0; i < bit_map.size(); i++) {
+		for (int j = 0; j < bit_map[i].size(); j++) {
+			if (bit_map[i][j] == 1) {
+				colony.set_cell_at(i+offset, j+offset, 1);
+			}
+		}
+	}
 
 	// Main loop flag
 	int quit = 0;
@@ -31,6 +46,9 @@ int main() {
 				quit = 1;
 			}
 		}
+		SDL_RenderPresent(renderer);
+		colony.update_colony();
+		draw_colony(renderer, &colony, cell_size);
 	}
 	
 	SDL_DestroyWindow(window);
