@@ -1,5 +1,4 @@
 #include <SDL3/SDL.h>
-#include <iostream>
 #include <vector>
 
 #include "SDL_Utils.hpp"
@@ -13,7 +12,7 @@ int main() {
 	SDL_Window* window = initializeWindow(height, width);
 	SDL_Renderer* renderer = initializeRenderer(window);
 
-	Colony colony(width, height, cell_size);
+	Colony colony(height/cell_size, width/cell_size);
 	std::vector<std::vector<int>> bit_map = {
 		{1, 1, 1},
 		{1, 0, 1},
@@ -40,7 +39,7 @@ int main() {
 		}
 		SDL_RenderPresent(renderer);
 		colony.update_colony();
-		draw_colony(renderer, &colony);
+		draw_colony(renderer, &colony, cell_size);
 	}
 	
 	SDL_DestroyWindow(window);

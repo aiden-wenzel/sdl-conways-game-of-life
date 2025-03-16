@@ -4,10 +4,9 @@
 #include "colony.hpp"
 
 /*----------Constructors----------*/
-Colony::Colony(int screen_width_in, int screen_height_in, int cell_size) {
-	this->cell_size = cell_size;
-	this->rows = screen_height_in/cell_size; 
-	this->columns = screen_width_in/cell_size;
+Colony::Colony(int rows_in, int columns_in) {
+	this->rows = rows_in; 
+	this->columns = columns_in;
 	this->underpopulation_limit = 2;
 	this->overpopulation_limit = 3;
 	this->resurection_limit = 3;
@@ -62,7 +61,6 @@ int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column
 int Colony::get_num_cells_to_investigate() {return this->cells_to_inspect.size();}
 int Colony::get_num_cells_to_kill() {return this->cells_to_kill.size();}
 int Colony::get_num_cells_to_resurect() {return this->cells_to_resurect.size();}
-int Colony::get_cell_size() {return this->cell_size;}
 
 std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
 	std::vector<std::pair<int, int>> ans;

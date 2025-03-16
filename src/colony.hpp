@@ -18,7 +18,7 @@ public:
 class Colony {
 public:
 	/*----------Constructors----------*/
-	Colony(int screen_width_in, int screen_height_in, int cell_size);
+	Colony(int rows_in, int columns_in);
 	Colony(const std::vector<std::vector<int>>& bit_map);
 
 	/*----------Getters----------*/
@@ -28,7 +28,6 @@ public:
 	int get_num_cells_to_investigate();
 	int get_num_cells_to_kill();
 	int get_num_cells_to_resurect();
-	int get_cell_size();
 
 	/*----------Setters----------*/
 	void set_cell_at(int row, int column, int value);
@@ -87,5 +86,5 @@ private:
 	std::queue<std::pair<int, int>> cells_to_resurect;
 
 	friend void update_cells(SDL_Renderer* renderer, Colony* colony);
-	friend void draw_colony(SDL_Renderer* renderer, Colony* colony); 
+	friend void draw_colony(SDL_Renderer* renderer, Colony* colony, float cell_size); 
 };

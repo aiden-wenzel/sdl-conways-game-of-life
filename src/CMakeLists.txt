@@ -4,5 +4,7 @@ add_library(game_of_life STATIC
 	"mouse.cpp"
 )
 
+target_link_libraries(game_of_life SDL3::SDL3)
+
 add_executable(main main.cpp)
-target_link_libraries(main PRIVATE SDL3::SDL3 m game_of_life)
+target_link_libraries(main m game_of_life)

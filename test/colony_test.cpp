@@ -8,13 +8,12 @@ int main(int argc, char **argv) {
 }
 
 TEST(Colony, Constructor_Basic) {
-	int screen_width = 800;
-	int screen_height = 400;
-	int cell_size = 2;
+	int num_rows = 200;
+	int num_cols = 400;
+	Colony colony(num_rows, num_cols);
 
-	Colony colony(screen_width, screen_height, cell_size);
-	ASSERT_EQ(colony.get_num_cols(), screen_width/cell_size);
-	ASSERT_EQ(colony.get_num_rows(), screen_height/cell_size);
+	ASSERT_EQ(colony.get_num_cols(), num_cols);
+	ASSERT_EQ(colony.get_num_rows(), num_rows);
 	
 	for (int i = 0; i < colony.get_num_rows(); i++) {
 		for (int j = 0; j < colony.get_num_cols(); j++) {
@@ -44,7 +43,7 @@ TEST(Colony, Set_Cell) {
 	int screen_height = 3;
 	int cell_size = 1;
 
-	Colony colony(screen_width, screen_height, cell_size);
+	Colony colony(screen_width/cell_size, screen_height/cell_size);
 
 	colony.set_cell_at(0, 0, 15);
 	ASSERT_EQ(colony.get_cell_at(0, 0), 15);
