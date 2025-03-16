@@ -27,6 +27,8 @@ int main() {
 	SDL_Event event;
 	std::pair<int, int> mouse_pos;
 
+	bool in_start = true;
+
 	while (!quit) {
 		// Handle events
 		while (SDL_PollEvent(&event) != 0) {
@@ -36,12 +38,15 @@ int main() {
 			else if (event.type == SDL_EVENT_MOUSE_MOTION) {
 				mouse_pos = get_mouse_pos(&event);
 			}
-			else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+			else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN && in_start) {
 				draw_cells(renderer, mouse_pos, &colony, cell_size);
 			}
 		}
+
 		draw_colony(renderer, &colony, cell_size);	
-		render_mouse_cell(renderer, mouse_pos, cell_size);
+		if (in_start) {
+			render_mouse_cell(renderer, mouse_pos, cell_size);
+		}
 		SDL_RenderPresent(renderer);
 	}
 	
