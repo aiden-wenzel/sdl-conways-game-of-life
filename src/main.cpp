@@ -47,12 +47,13 @@ int main() {
 		}
 
 		draw_colony(renderer, &colony, cell_size);	
-		if (in_start) {
+		if (!in_start) {
+			colony.update_colony();
+		}
+
+		else {
 			render_start_button(renderer, {0, 0}, {80, 40});		
 			render_mouse_cell(renderer, mouse_pos, cell_size);
-		}
-		else {
-
 		}
 		SDL_RenderPresent(renderer);
 	}
