@@ -43,7 +43,6 @@ void erase_cell(SDL_Renderer* renderer, float cell_dim, float x, float y) {
 void draw_colony(SDL_Renderer* renderer, Colony* colony, float cell_size) {	
 	for (int i = 0; i < colony->get_num_rows(); i++) {
 		for (int j = 0; j < colony->get_num_cols(); j++) {
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
 			if (colony->get_cell_at(i, j) == 1) {
 				draw_cell(renderer,	cell_size, i*cell_size, j*cell_size);
 			}
