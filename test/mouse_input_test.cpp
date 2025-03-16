@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "SDL_Utils.hpp"
+#include "mouse.hpp"
 
 const float height = 900;
 const float width = 900;
