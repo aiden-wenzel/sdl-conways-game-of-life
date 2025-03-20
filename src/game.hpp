@@ -11,6 +11,9 @@ public:
 
 	SDL_Renderer* get_renderer();
 	SDL_Window* get_window();
+	Colony* get_colony();
+
+	void draw_colony();
 
 private:
 	SDL_Window* initializeWindow(float width, float height);
