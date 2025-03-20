@@ -3,9 +3,16 @@
 
 #include "game.hpp"
 
-Game::Game(float width, float height) {
+Game::Game(float width, float height, float cell_size) {
 	this->window = this->initializeWindow(width, height);
 	this->renderer = this->initializeRenderer(this->window);	
+	this->cell_size = cell_size;
+
+	this->colony = new Colony(height/cell_size, width/cell_size);
+}
+Game::~Game() {
+	std::cout << "Destroying Colony\n";
+	delete this->colony;
 }
 
 SDL_Renderer* Game::get_renderer() {return this->renderer;}
