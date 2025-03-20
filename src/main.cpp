@@ -10,16 +10,14 @@
 
 const float WIDTH = 1080;
 const float HEIGHT = 920;
-const float cell_size = 10;
+const float cell_size = 5;
 
 int main() {
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 		return -1;
 	}
-	Game game(WIDTH, HEIGHT);
-
-	Colony colony(HEIGHT/cell_size, WIDTH/cell_size);
+	Game game(WIDTH, HEIGHT, cell_size);
 
 	// Main loop flag
 	int quit = 0;
@@ -27,6 +25,7 @@ int main() {
 	std::pair<int, int> mouse_pos;
 
 	bool in_start = true;
+	bool mouse_held = false;
 
 	while (!quit) {
 		// Handle events
@@ -34,20 +33,30 @@ int main() {
 			if (event.type == SDL_EVENT_QUIT) {
 				quit = 1;
 			}
-			else if (event.type == SDL_EVENT_MOUSE_MOTION) {
+			if (event.type == SDL_EVENT_MOUSE_MOTION) {
 				mouse_pos = get_mouse_pos(&event);
+				std::cout << mouse_pos.second << "\n";
 			}
-			else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN && in_start) {
-				draw_cells(game.get_renderer(), mouse_pos, &colony, cell_size);
+			if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+				std::cout << "Start Hold\n";
+				mouse_held = true;
+			}
+			if (event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
+				std::cout << "End Hold\n";
+				mouse_held = false;
+			}
+			if (mouse_held && in_start) {
+				draw_cells(game.get_renderer(), mouse_pos, game.get_colony(), cell_size);
 				if (0 <= mouse_pos.first && mouse_pos.first <= 80 && 0 <= mouse_pos.second && mouse_pos.second <=40 ) {
 					in_start = false;
 				}
 			}
 		}
 
-		draw_colony(game.get_renderer(), &colony, cell_size);	
+		game.draw_colony();
+
 		if (!in_start) {
-			colony.update_colony();
+			game.get_colony()->update_colony();
 		}
 
 		else {
