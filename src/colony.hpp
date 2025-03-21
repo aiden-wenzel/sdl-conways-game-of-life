@@ -84,6 +84,8 @@ private:
 	std::unordered_set<std::pair<int, int>, PairHash> cells_to_inspect;
 	std::queue<std::pair<int, int>> cells_to_kill;
 	std::queue<std::pair<int, int>> cells_to_resurect;
+	std::vector<std::pair<int, int>> cells_to_kill;
+	std::vector<std::pair<int, int>> cells_to_resurect;
 
 	friend void update_cells(SDL_Renderer* renderer, Colony* colony);
 	friend void draw_colony(SDL_Renderer* renderer, Colony* colony, float cell_size); 

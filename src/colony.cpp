@@ -190,26 +190,21 @@ bool Colony::resurect_cell(int row, int column) {
 }
 
 void Colony::kill_cells() {
-	while(!this->cells_to_kill.empty()) {
-		std::pair<int, int> choord = this->cells_to_kill.front();
+	for (int i = 0; i < this->cells_to_kill.size(); i++) {
+		std::pair<int, int> choord = this->cells_to_kill[i];
 		this->cell_map[choord.first][choord.second] = 0;
-		this->cells_to_kill.pop();
 	}
+	this->cells_to_kill.clear();
 }
 
 void Colony::resurect_cells() {
 	std::vector<std::pair<int, int>> inspect;
-	while (!this->cells_to_resurect.empty()) {
-		std::pair<int, int> choord = this->cells_to_resurect.front();
+
+	for (int i = 0; i < this->cells_to_resurect.size(); i++) {
+		std::pair<int, int> choord = this->cells_to_resurect[i];
 		this->cell_map[choord.first][choord.second] = 1;
-		this->cells_to_resurect.pop();
-
-		inspect = this->get_neighbors(choord.first, choord.second);
-
-		for (int i = 0; i < inspect.size(); i++) {
-			this->cells_to_inspect.insert(inspect[i]);
-		}
 	}
+	this->cells_to_resurect.clear();
 }
 
 void Colony::update_colony() {
