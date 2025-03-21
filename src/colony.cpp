@@ -221,3 +221,27 @@ void Colony::update_colony() {
 	this->kill_cells();
 	this->resurect_cells();
 }
+
+void Colony::add_cells_to_containers() {
+	for (auto it = this->alive_cells.begin(); it != this->alive_cells.end(); it++) {
+		std::pair<int, int> curr_alive_cell = *it;	
+		std::vector<std::pair<int, int>> neighbors = this->get_neighbors(curr_alive_cell.first, curr_alive_cell.second);
+
+		if (resurect_cell(curr_alive_cell.first, curr_alive_cell.second)) {
+			this->cells_to_resurect.push_back(*it);
+		}
+		else if (kill_cell(curr_alive_cell.first, curr_alive_cell.second)) {
+			this->cells_to_kill.push_back(*it);
+		}
+
+		for (int i = 0; i < neighbors.size(); i++) {
+			std::pair<int, int> tmp = neighbors[i];
+			if (resurect_cell(tmp.first, tmp.second)) {
+				this->cells_to_resurect.push_back(neighbors[i]);
+			}
+			else if (kill_cell(tmp.first, tmp.second)) {
+				this->cells_to_kill.push_back(neighbors[i]);
+			}
+		}
+	}
+}

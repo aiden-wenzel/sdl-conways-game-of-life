@@ -60,6 +60,7 @@ public:
 
 	void initialize_cells_to_inspect();
 	void update_colony();
+	void add_cells_to_containers();
 
 private:
 	/**
@@ -84,6 +85,7 @@ private:
 	std::unordered_set<std::pair<int, int>, PairHash> cells_to_inspect;
 	std::queue<std::pair<int, int>> cells_to_kill;
 	std::queue<std::pair<int, int>> cells_to_resurect;
+	std::unordered_set<std::pair<int, int>, PairHash> alive_cells;
 	std::vector<std::pair<int, int>> cells_to_kill;
 	std::vector<std::pair<int, int>> cells_to_resurect;
 
