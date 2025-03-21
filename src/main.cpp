@@ -35,14 +35,11 @@ int main() {
 			}
 			if (event.type == SDL_EVENT_MOUSE_MOTION) {
 				mouse_pos = get_mouse_pos(&event);
-				std::cout << mouse_pos.second << "\n";
 			}
 			if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-				std::cout << "Start Hold\n";
 				mouse_held = true;
 			}
 			if (event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
-				std::cout << "End Hold\n";
 				mouse_held = false;
 			}
 			if (mouse_held && in_start) {
