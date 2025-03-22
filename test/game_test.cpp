@@ -6,7 +6,7 @@
 
 const float height = 900;
 const float width = 900;
-const float cell_size = 10;
+const float cell_size = 2;
 
 int main() {
 	SDL_Window* window = initializeWindow(height, width);
