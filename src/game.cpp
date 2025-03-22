@@ -45,14 +45,26 @@ SDL_Renderer* Game::initializeRenderer(SDL_Window* window) {
 }
 
 void Game::draw_colony() {
-	for (int i = 0; i < this->colony->get_num_rows(); i++) {
-		for (int j = 0; j < this->colony->get_num_cols(); j++) {
-			if (this->colony->get_cell_at(i, j) == 1) {
-				draw_cell(this->renderer, this->cell_size, i*this->cell_size, j*this->cell_size);
-			}
-			else if (this->colony->get_cell_at(i, j) == 0) {
-				erase_cell(this->renderer, this->cell_size, i*this->cell_size, j*this->cell_size);
+	this->colony->add_cells_to_containers();
+	for (int i = 0; i < this->colony->cells_to_resurect.size(); i++) {
+		std::pair<int, int> tmp = this->colony->cells_to_resurect[i];
+		draw_cell(this->renderer, cell_size, tmp.first*cell_size, tmp.second*cell_size);
+	}
+	for (int i = 0; i < this->colony->cells_to_kill.size(); i++) {
+		std::pair<int, int> tmp = this->colony->cells_to_kill[i];
+		erase_cell(this->renderer, cell_size, tmp.first*cell_size, tmp.second*cell_size);
+	}
+	this->colony->kill_cells();
+	this->colony->resurect_cells();
+}
+
+void Game::insert_cell_snippet(const std::vector<std::vector<int>>& bit_map, int offset) {
+	for (int i = 0; i < bit_map.size(); i++) {
+		for (int j = 0; j < bit_map[i].size(); j++) {
+			if (bit_map[i][j] == 1) {
+				this->colony->set_cell_at(i+offset, j+offset, 1);
+				draw_cell(this->renderer, this->cell_size, j*cell_size, i*cell_size);
 			}
 		}
-	}
+	}	
 }

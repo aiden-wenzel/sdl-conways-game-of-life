@@ -29,6 +29,8 @@ public:
 	int get_num_cells_to_investigate();
 	int get_num_cells_to_kill();
 	int get_num_cells_to_resurect();
+	std::vector<std::pair<int, int>>& get_cells_to_resurect();
+	std::vector<std::pair<int, int>>& get_cells_to_kill();
 
 	/*----------Setters----------*/
 	void set_cell_at(int row, int column, int value);
@@ -89,6 +91,7 @@ private:
 
 	friend void update_cells(SDL_Renderer* renderer, Colony* colony);
 	friend void draw_colony(SDL_Renderer* renderer, Colony* colony, float cell_size); 
+	friend class Game;
 	FRIEND_TEST(Colony_Private, add_cells_to_containers);
 	FRIEND_TEST(Colony, kill_and_resurect_cells); 
 };

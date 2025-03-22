@@ -59,6 +59,8 @@ int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column
 int Colony::get_num_cells_to_investigate() {return this->alive_cells.size();}
 int Colony::get_num_cells_to_kill() {return this->cells_to_kill.size();}
 int Colony::get_num_cells_to_resurect() {return this->cells_to_resurect.size();}
+std::vector<std::pair<int, int>>& Colony::get_cells_to_resurect() {return this->cells_to_resurect;}
+std::vector<std::pair<int, int>>& Colony::get_cells_to_kill() {return this->cells_to_kill;}
 
 std::vector<std::pair<int,int>> Colony::get_neighbors(int row, int column) {
 	std::vector<std::pair<int, int>> ans;

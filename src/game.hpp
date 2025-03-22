@@ -14,6 +14,7 @@ public:
 	Colony* get_colony();
 
 	void draw_colony();
+	void insert_cell_snippet(const std::vector<std::vector<int>>& bit_map, int offset);
 
 private:
 	SDL_Window* initializeWindow(float width, float height);

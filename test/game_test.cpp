@@ -3,32 +3,28 @@
 
 #include "SDL_Utils.hpp"
 #include "colony.hpp"
+#include "game.hpp"
 
 const float height = 900;
 const float width = 900;
-const float cell_size = 10;
+const float cell_size = 2;
 
 int main() {
-	SDL_Window* window = initializeWindow(height, width);
-	SDL_Renderer* renderer = initializeRenderer(window);
+	Game game(width, height, cell_size);
 
-	Colony colony(height/cell_size, width/cell_size);
 	std::vector<std::vector<int>> bit_map = {
 		{1, 1, 1},
 		{1, 0, 1},
 		{1, 0, 1},
 	};
-	int offset = 15;
-	for (int i = 0; i < bit_map.size(); i++) {
-		for (int j = 0; j < bit_map[i].size(); j++) {
-			if (bit_map[i][j] == 1) {
-				colony.set_cell_at(i+offset, j+offset, 1);
-			}
-		}
-	}
+	
+	int offset = 40;
+	game.insert_cell_snippet(bit_map, offset);
 	
 	int quit = 0;
 	SDL_Event event;
+	SDL_SetRenderDrawColor(game.get_renderer(), 255, 255, 255, 0);
+	SDL_RenderClear(game.get_renderer());
 
 	while (!quit) {
 		// Handle events
@@ -37,12 +33,11 @@ int main() {
 				quit = 1;
 			}
 		}
-		SDL_RenderPresent(renderer);
-		colony.update_colony();
-		draw_colony(renderer, &colony, cell_size);
+		SDL_RenderPresent(game.get_renderer());
+		game.draw_colony();
 	}
 	
-	SDL_DestroyWindow(window);
+	SDL_DestroyWindow(game.get_window());
 	SDL_Quit();
 
 	return 0;
