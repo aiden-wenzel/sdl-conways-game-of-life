@@ -11,7 +11,7 @@ Colony::Colony(int rows_in, int columns_in) {
 	this->overpopulation_limit = 3;
 	this->resurection_limit = 3;
 	initialize_cell_map();
-	initialize_cells_to_inspect();
+	initialize_alive_cells();
 }
 
 Colony::Colony(const std::vector<std::vector<int>>& bit_map) {
@@ -29,7 +29,7 @@ Colony::Colony(const std::vector<std::vector<int>>& bit_map) {
 		}
 	}
 
-	initialize_cells_to_inspect();
+	initialize_alive_cells();
 }
 
 void Colony::initialize_cell_map() {
@@ -41,14 +41,12 @@ void Colony::initialize_cell_map() {
 	}
 }
 
-void Colony::initialize_cells_to_inspect() {
+void Colony::initialize_alive_cells() {
 	std::vector<std::pair<int, int>> tmp;
 	for (int row = 0; row < this->rows; row++) {
 		for (int col = 0; col < this->columns; col++) {
 			if (this->cell_map[row][col] == 1) {
-				this->cells_to_inspect.insert({row, col});
-				tmp = this->get_neighbors(row, col);
-				this->cells_to_inspect.insert(tmp.begin(), tmp.end());
+				this->alive_cells.insert({row, col});
 			}
 		}
 	}
@@ -58,7 +56,7 @@ void Colony::initialize_cells_to_inspect() {
 int Colony::get_num_rows() { return this->rows; }
 int Colony::get_num_cols() { return this->columns; }
 int Colony::get_cell_at(int row, int column) { return this->cell_map[row][column]; }
-int Colony::get_num_cells_to_investigate() {return this->cells_to_inspect.size();}
+int Colony::get_num_cells_to_investigate() {return this->alive_cells.size();}
 int Colony::get_num_cells_to_kill() {return this->cells_to_kill.size();}
 int Colony::get_num_cells_to_resurect() {return this->cells_to_resurect.size();}
 
@@ -172,6 +170,9 @@ int Colony::get_num_alive_neighbors(int row, int column) {
 /*----------Setters----------*/
 void Colony::set_cell_at(int row, int column, int value) {
 	this->cell_map[row][column] = value;
+	if (value == 1) {
+		this->alive_cells.insert({row, column});
+	}
 }
 
 
@@ -190,39 +191,51 @@ bool Colony::resurect_cell(int row, int column) {
 }
 
 void Colony::kill_cells() {
-	while(!this->cells_to_kill.empty()) {
-		std::pair<int, int> choord = this->cells_to_kill.front();
+	for (int i = 0; i < this->cells_to_kill.size(); i++) {
+		std::pair<int, int> choord = this->cells_to_kill[i];
 		this->cell_map[choord.first][choord.second] = 0;
-		this->cells_to_kill.pop();
+		this->alive_cells.erase({choord.first, choord.second});
 	}
+	this->cells_to_kill.clear();
 }
 
 void Colony::resurect_cells() {
 	std::vector<std::pair<int, int>> inspect;
-	while (!this->cells_to_resurect.empty()) {
-		std::pair<int, int> choord = this->cells_to_resurect.front();
+
+	for (int i = 0; i < this->cells_to_resurect.size(); i++) {
+		std::pair<int, int> choord = this->cells_to_resurect[i];
 		this->cell_map[choord.first][choord.second] = 1;
-		this->cells_to_resurect.pop();
-
-		inspect = this->get_neighbors(choord.first, choord.second);
-
-		for (int i = 0; i < inspect.size(); i++) {
-			this->cells_to_inspect.insert(inspect[i]);
-		}
+		this->alive_cells.insert({choord.first, choord.second});
 	}
+	this->cells_to_resurect.clear();
 }
 
 void Colony::update_colony() {
-	for (int i = 0; i < this->rows; i++) {
-		for (int j = 0; j < this->columns; j++) {
-			if (resurect_cell(i, j)) {
-				this->cells_to_resurect.push({i, j});
+	this->add_cells_to_containers();
+	this->kill_cells();
+	this->resurect_cells();
+}
+
+void Colony::add_cells_to_containers() {
+	for (auto it = this->alive_cells.begin(); it != this->alive_cells.end(); it++) {
+		std::pair<int, int> curr_alive_cell = *it;	
+		std::vector<std::pair<int, int>> neighbors = this->get_neighbors(curr_alive_cell.first, curr_alive_cell.second);
+
+		if (resurect_cell(curr_alive_cell.first, curr_alive_cell.second)) {
+			this->cells_to_resurect.push_back(*it);
+		}
+		else if (kill_cell(curr_alive_cell.first, curr_alive_cell.second)) {
+			this->cells_to_kill.push_back(*it);
+		}
+
+		for (int i = 0; i < neighbors.size(); i++) {
+			std::pair<int, int> tmp = neighbors[i];
+			if (resurect_cell(tmp.first, tmp.second)) {
+				this->cells_to_resurect.push_back(neighbors[i]);
 			}
-			else if (kill_cell(i, j)) {
-				this->cells_to_kill.push({i, j});
+			else if (kill_cell(tmp.first, tmp.second)) {
+				this->cells_to_kill.push_back(neighbors[i]);
 			}
 		}
 	}
-	this->kill_cells();
-	this->resurect_cells();
 }

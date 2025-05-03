@@ -212,14 +212,43 @@ TEST(Colony, kill_and_resurect_cells) {
 	Colony colony(bit_map);
 	using std::vector;
 	vector<vector<vector<int>>> order = {bit_map, next_1, next_2, next_3, next_4};
-
+	
 	for (int i = 0; i < order.size(); i++) {
-		for (int row = 0; row < 3; row++) {
-			for (int col = 0; col < 3; col++) {
-				ASSERT_EQ(colony.get_cell_at(row, col), order[i][row][col]);
-			}
-		}
+		ASSERT_EQ(colony.cell_map, order[i]);
 		colony.update_colony();
 	}
 }
 
+TEST(Colony_Private, add_cells_to_containers) {
+	std::vector<std::vector<int>> bit_map = {
+		{0, 0, 0},
+		{1, 1, 1},
+		{0, 1, 1},
+	};
+
+	std::vector<std::vector<int>> next_1 = {
+		{0, 1, 0},
+		{1, 0, 1},
+		{1, 0, 1},
+	};
+
+	Colony colony(bit_map);
+	colony.add_cells_to_containers();
+
+	std::unordered_set<std::pair<int, int>, PairHash> cells_to_resurect;	
+	cells_to_resurect.insert({0, 1});
+	cells_to_resurect.insert({2, 0});
+
+	for (int i = 0; i < colony.cells_to_resurect.size(); i++) {
+		ASSERT_TRUE(cells_to_resurect.find({colony.cells_to_resurect[i]}) != cells_to_resurect.end());
+	}
+
+	std::unordered_set<std::pair<int, int>, PairHash> cells_to_kill;	
+	cells_to_kill.insert({1, 1});
+	cells_to_kill.insert({2, 1});
+	for (int i = 0; i < colony.cells_to_kill.size(); i++) {
+		ASSERT_TRUE(cells_to_kill.find({colony.cells_to_kill[i]}) != cells_to_kill.end());
+	}
+
+	
+}
