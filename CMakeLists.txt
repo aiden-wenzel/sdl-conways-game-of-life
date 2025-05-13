@@ -16,8 +16,26 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
+	googletest
+	URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
+)
+
+FetchContent_Declare(
+	imgui
+	URL https://github.com/ocornut/imgui/archive/refs/tags/v1.91.9b.tar.gz
+)
+# AUX_SOURCE_DIRECTORY("./build/_deps/imgui-src/" imgui_files)
+# add_library(imgui STATIC
+# 	${imgui_files}
+# )
+add_library(imgui STATIC
+	"./build/_deps/imgui-src/imgui.cpp"
+	"./build/_deps/imgui-src/imgui_demo.cpp"
+	"./build/_deps/imgui-src/imgui_draw.cpp"
+	"./build/_deps/imgui-src/imgui_tables.cpp"
+	"./build/_deps/imgui-src/imgui_widgets.cpp"
+	"./build/_deps/imgui-src/backends/imgui_impl_sdl3.cpp"
+	"./build/_deps/imgui-src/backends/imgui_impl_sdlrenderer3.cpp"
 )
 
 FetchContent_MakeAvailable(googletest)
@@ -25,6 +43,8 @@ FetchContent_MakeAvailable(sdl)
 
 include_directories("./build/_deps/sdl-src/include/")
 include_directories("./build/_deps/googletest-src/googletest/include/")
+include_directories("./build/_deps/imgui-src/")
+include_directories("./build/_deps/imgui-src/backends/")
 include_directories("./src")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
