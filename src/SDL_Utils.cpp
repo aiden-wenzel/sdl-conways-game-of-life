@@ -52,9 +52,3 @@ void draw_colony(SDL_Renderer* renderer, Colony* colony, float cell_size) {
 		}
 	}
 }
-
-void render_start_button(SDL_Renderer* renderer, std::pair<float, float> pos, std::pair<float, float> dims) {
-	SDL_FRect cell = {pos.first, pos.second, dims.first, dims.second};
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
-	SDL_RenderFillRect(renderer, &cell);
-}

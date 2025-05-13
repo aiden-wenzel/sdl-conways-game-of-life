@@ -9,4 +9,3 @@ void draw_cell(SDL_Renderer* renderer, float cell_dim, float x, float y);
 void erase_cell(SDL_Renderer* renderer, float cell_dim, float x, float y);
 
 void draw_colony(SDL_Renderer* renderer, Colony* colony, float cell_size);
-void render_start_button(SDL_Renderer* renderer, std::pair<float, float> pos, std::pair<float, float> dims); 

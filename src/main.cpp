@@ -14,13 +14,14 @@
 
 const float WIDTH = 1080;
 const float HEIGHT = 920;
-const float cell_size = 5;
+const float cell_size = 20;
 
 int main() {
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 		return -1;
 	}
+
 	Game game(WIDTH, HEIGHT, cell_size);
 
 	IMGUI_CHECKVERSION();
@@ -41,10 +42,12 @@ int main() {
 
 	bool in_start = true;
 	bool mouse_held = false;
+	bool hovering;
 
 	while (!quit) {
 		// Handle events
 		while (SDL_PollEvent(&event) != 0) {
+			ImGui_ImplSDL3_ProcessEvent(&event);
 			if (event.type == SDL_EVENT_QUIT) {
 				quit = 1;
 			}
@@ -57,13 +60,8 @@ int main() {
 			if (event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
 				mouse_held = false;
 			}
-			if (mouse_held && in_start) {
-				draw_cells(game.get_renderer(), mouse_pos, game.get_colony(), cell_size);
-				if (0 <= mouse_pos.first && mouse_pos.first <= 80 && 0 <= mouse_pos.second && mouse_pos.second <=40 ) {
-					in_start = false;
-				}
-			}
 		}
+		hovering = io.WantCaptureMouse;
 
 		if (!in_start) {
 			game.get_colony()->update_colony();
@@ -78,17 +76,20 @@ int main() {
 		ImGui_ImplSDLRenderer3_NewFrame();
 		ImGui_ImplSDL3_NewFrame();
 		ImGui::NewFrame();
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+		ImGui::Begin("Hello, world!");
+		if (ImGui::Button("Start")) {
+			in_start = false;
+		}
 		ImGui::End();
 		ImGui::Render();
 		SDL_SetRenderScale(game.get_renderer(), io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
 		ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), game.get_renderer());
 
-
-		if (in_start) {
-			render_start_button(game.get_renderer(), {0, 0}, {80, 40});		
+		if (in_start && !hovering) {
 			render_mouse_cell(game.get_renderer(), mouse_pos, cell_size);
+			if (mouse_held) {
+				draw_cells(game.get_renderer(), mouse_pos, game.get_colony(), cell_size);
+			}
 		}
 
 		SDL_RenderPresent(game.get_renderer());
