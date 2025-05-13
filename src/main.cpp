@@ -3,6 +3,10 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 
+#include <imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_sdlrenderer3.h>
+
 #include "SDL_Utils.hpp"
 #include "colony.hpp"
 #include "mouse.hpp"
@@ -18,6 +22,17 @@ int main() {
 		return -1;
 	}
 	Game game(WIDTH, HEIGHT, cell_size);
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	ImGui_ImplSDL3_InitForSDLRenderer(game.get_window(), game.get_renderer());
+	ImGui_ImplSDLRenderer3_Init(game.get_renderer());
 
 	// Main loop flag
 	int quit = 0;
@@ -50,16 +65,32 @@ int main() {
 			}
 		}
 
-		game.draw_colony();
-
 		if (!in_start) {
 			game.get_colony()->update_colony();
 		}
 
-		else {
+		// Render
+		SDL_SetRenderDrawColor(game.get_renderer(), 255, 255, 255, 255);
+		SDL_RenderClear(game.get_renderer());
+
+		game.draw_colony();
+
+		ImGui_ImplSDLRenderer3_NewFrame();
+		ImGui_ImplSDL3_NewFrame();
+		ImGui::NewFrame();
+		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+		ImGui::End();
+		ImGui::Render();
+		SDL_SetRenderScale(game.get_renderer(), io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
+		ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), game.get_renderer());
+
+
+		if (in_start) {
 			render_start_button(game.get_renderer(), {0, 0}, {80, 40});		
 			render_mouse_cell(game.get_renderer(), mouse_pos, cell_size);
 		}
+
 		SDL_RenderPresent(game.get_renderer());
 	}
 	
