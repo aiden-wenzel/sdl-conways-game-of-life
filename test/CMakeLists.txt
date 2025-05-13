@@ -14,3 +14,9 @@ target_link_libraries(game_test game_of_life)
 
 add_executable(mouse_input_test mouse_input_test.cpp)
 target_link_libraries(mouse_input_test game_of_life)
+
+add_executable(imgui_test imgui_test.cpp)
+target_link_libraries(imgui_test SDL3::SDL3 imgui)
+
+add_executable(my_imgui_test my_imgui_test.cpp)
+target_link_libraries(my_imgui_test SDL3::SDL3 imgui)
