@@ -16,6 +16,13 @@ const float WIDTH = 1080;
 const float HEIGHT = 920;
 const float cell_size = 20;
 
+enum GameState {
+	InStart,
+	Running,
+	Restarting,
+	Quiting,
+};
+
 int main() {
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -44,7 +51,7 @@ int main() {
 	bool mouse_held = false;
 	bool restart = false;
 	bool hovering;
-
+	GameState state = GameState::InStart;
 	while (!quit) {
 		// Handle events
 		while (SDL_PollEvent(&event) != 0) {
@@ -68,24 +75,23 @@ int main() {
 		ImGui_ImplSDL3_NewFrame();
 		ImGui::NewFrame();
 		ImGui::Begin("Hello, world!");
+
 		if (ImGui::Button("Start")) {
-			in_start = false;
+			state = GameState::Running;
 		}
 		else if (ImGui::Button("Restart")) {
-			restart = true;
-			in_start = false;
+			state = GameState::Restarting;
 		}
-
 		ImGui::End();
 		ImGui::Render();
 		
-		if (restart) {
-			game.get_colony()->reset_colony();
-			restart = false;
-			in_start = true;
-		}
-		else if (!in_start) {
-			game.get_colony()->update_colony();
+		switch (state) {
+			case GameState::Running:
+				game.get_colony()->update_colony();
+				break;
+			case GameState::Restarting:
+				game.get_colony()->reset_colony();
+				state = GameState::InStart;
 		}
 
 		// Render
@@ -97,11 +103,15 @@ int main() {
 		SDL_SetRenderScale(game.get_renderer(), io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
 		ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), game.get_renderer());
 
-		if (in_start && !hovering) {
-			render_mouse_cell(game.get_renderer(), mouse_pos, cell_size);
-			if (mouse_held) {
-				draw_cells(game.get_renderer(), mouse_pos, game.get_colony(), cell_size);
-			}
+		switch (state) {
+			case GameState::InStart:
+				if (!hovering) {
+					render_mouse_cell(game.get_renderer(), mouse_pos, cell_size);
+					if (mouse_held) {
+						draw_cells(game.get_renderer(), mouse_pos, game.get_colony(), cell_size);
+					}
+				}
+				break;
 		}
 
 		SDL_RenderPresent(game.get_renderer());
