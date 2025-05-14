@@ -47,9 +47,7 @@ int main() {
 	SDL_Event event;
 	std::pair<int, int> mouse_pos;
 
-	bool in_start = true;
 	bool mouse_held = false;
-	bool restart = false;
 	bool hovering;
 	GameState state = GameState::InStart;
 	while (!quit) {

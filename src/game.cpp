@@ -22,7 +22,7 @@ Colony* Game::get_colony() {return this->colony;}
 
 SDL_Window* Game::initializeWindow(float width, float height) {
 	// Create an SDL window
-	SDL_Window* window = SDL_CreateWindow("Simple SDL2 Window",
+	SDL_Window* window = SDL_CreateWindow("Conway's Game of Life",
 			width, height, 0);
 	if (window == NULL) {
 		std::cout << "Window could not be created! SDL_Error:" << SDL_GetError() << "\n";
