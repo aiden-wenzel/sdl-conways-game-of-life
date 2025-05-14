@@ -25,7 +25,7 @@ void render_mouse_cell(SDL_Renderer* renderer, const std::pair<int, int>& mouse_
 	SDL_RenderFillRect(renderer, &cell);
 }
 
-void draw_cells(SDL_Renderer* renderer, const std::pair<int, int>& mouse_pos, Colony* colony, float cell_size) {
+void resurect_cells(const std::pair<int, int>& mouse_pos, Colony* colony, float cell_size) {
 	std::pair<int, int> indicies = mouse_to_index(mouse_pos, cell_size);
 	colony->set_cell_at(indicies.first, indicies.second, 1);
 }

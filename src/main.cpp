@@ -85,7 +85,13 @@ int main() {
 		ImGui::End();
 		ImGui::Render();
 		
+		// Update
 		switch (state) {
+			case GameState::InStart:
+				if (mouse_held && !hovering) {
+					resurect_cells(mouse_pos, game.get_colony(), cell_size);
+				}
+				break;
 			case GameState::Running:
 				game.get_colony()->update_colony();
 				break;
@@ -107,9 +113,6 @@ int main() {
 			case GameState::InStart:
 				if (!hovering) {
 					render_mouse_cell(game.get_renderer(), mouse_pos, cell_size);
-					if (mouse_held) {
-						draw_cells(game.get_renderer(), mouse_pos, game.get_colony(), cell_size);
-					}
 				}
 				break;
 		}
