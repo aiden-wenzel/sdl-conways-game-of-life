@@ -42,6 +42,7 @@ int main() {
 
 	bool in_start = true;
 	bool mouse_held = false;
+	bool restart = false;
 	bool hovering;
 
 	while (!quit) {
@@ -63,7 +64,27 @@ int main() {
 		}
 		hovering = io.WantCaptureMouse;
 
-		if (!in_start) {
+		ImGui_ImplSDLRenderer3_NewFrame();
+		ImGui_ImplSDL3_NewFrame();
+		ImGui::NewFrame();
+		ImGui::Begin("Hello, world!");
+		if (ImGui::Button("Start")) {
+			in_start = false;
+		}
+		else if (ImGui::Button("Restart")) {
+			restart = true;
+			in_start = false;
+		}
+
+		ImGui::End();
+		ImGui::Render();
+		
+		if (restart) {
+			game.get_colony()->reset_colony();
+			restart = false;
+			in_start = true;
+		}
+		else if (!in_start) {
 			game.get_colony()->update_colony();
 		}
 
@@ -73,15 +94,6 @@ int main() {
 
 		game.draw_colony();
 
-		ImGui_ImplSDLRenderer3_NewFrame();
-		ImGui_ImplSDL3_NewFrame();
-		ImGui::NewFrame();
-		ImGui::Begin("Hello, world!");
-		if (ImGui::Button("Start")) {
-			in_start = false;
-		}
-		ImGui::End();
-		ImGui::Render();
 		SDL_SetRenderScale(game.get_renderer(), io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
 		ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), game.get_renderer());
 
