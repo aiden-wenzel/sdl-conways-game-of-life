@@ -57,6 +57,7 @@ public:
 	bool kill_cell(int row, int column);
 	bool resurect_cell(int row, int column);
 	void kill_cells();
+	void reset_colony();
 	void resurect_cells();
 
 	void initialize_alive_cells();

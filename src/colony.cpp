@@ -168,6 +168,13 @@ int Colony::get_num_alive_neighbors(int row, int column) {
 }
 
 /*----------Setters----------*/
+void Colony::reset_colony() {
+	for (int i = 0; i < this->cell_map.size(); i++) {
+		for (int j = 0; j < this->cell_map[i].size(); j++) {
+			this->set_cell_at(i, j, 0);
+		}
+	}
+}
 void Colony::set_cell_at(int row, int column, int value) {
 	this->cell_map[row][column] = value;
 	if (value == 1) {
