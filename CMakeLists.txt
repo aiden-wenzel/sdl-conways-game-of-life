@@ -24,10 +24,7 @@ FetchContent_Declare(
 	imgui
 	URL https://github.com/ocornut/imgui/archive/refs/tags/v1.91.9b.tar.gz
 )
-# AUX_SOURCE_DIRECTORY("./build/_deps/imgui-src/" imgui_files)
-# add_library(imgui STATIC
-# 	${imgui_files}
-# )
+
 add_library(imgui STATIC
 	"./build/_deps/imgui-src/imgui.cpp"
 	"./build/_deps/imgui-src/imgui_demo.cpp"
@@ -40,6 +37,7 @@ add_library(imgui STATIC
 
 FetchContent_MakeAvailable(googletest)
 FetchContent_MakeAvailable(sdl)
+FetchContent_MakeAvailable(imgui)
 
 include_directories("./build/_deps/sdl-src/include/")
 include_directories("./build/_deps/googletest-src/googletest/include/")
