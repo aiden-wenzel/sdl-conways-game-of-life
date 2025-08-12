@@ -15,27 +15,18 @@ FetchContent_Declare(
 	URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
 )
 
-FetchContent_Declare(
-	imgui
-	URL https://github.com/ocornut/imgui/archive/refs/tags/v1.91.9b.tar.gz
-)
-
-add_library(imgui STATIC
-	"./build/_deps/imgui-src/imgui.cpp"
-	"./build/_deps/imgui-src/imgui_demo.cpp"
-	"./build/_deps/imgui-src/imgui_draw.cpp"
-	"./build/_deps/imgui-src/imgui_tables.cpp"
-	"./build/_deps/imgui-src/imgui_widgets.cpp"
-	"./build/_deps/imgui-src/backends/imgui_impl_sdl3.cpp"
-	"./build/_deps/imgui-src/backends/imgui_impl_sdlrenderer3.cpp"
+file(GLOB SOURCES "deps/imgui/*.cpp")
+add_library(
+	imgui STATIC ${SOURCES} 
+	"deps/imgui/backends/imgui_impl_sdl3.cpp"
+	"deps/imgui/backends/imgui_impl_sdlrenderer3.cpp"
 )
 
 FetchContent_MakeAvailable(googletest)
-FetchContent_MakeAvailable(imgui)
 
 include_directories("./build/_deps/googletest-src/googletest/include/")
-include_directories("./build/_deps/imgui-src/")
-include_directories("./build/_deps/imgui-src/backends/")
+include_directories("deps/imgui/")
+include_directories("deps/imgui/backends/")
 include_directories("./src")
 include_directories("include")
 include_directories("deps/SDL/include")
