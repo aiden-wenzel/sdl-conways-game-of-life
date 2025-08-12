@@ -1,7 +1,7 @@
 #include <vector>
 
 
-#include "colony.hpp"
+#include "life/colony.hpp"
 
 /*----------Constructors----------*/
 Colony::Colony(int rows_in, int columns_in) {

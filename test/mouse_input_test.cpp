@@ -1,8 +1,8 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 
-#include "SDL_Utils.hpp"
-#include "mouse.hpp"
+#include "life/SDL_Utils.hpp"
+#include "life/mouse.hpp"
 
 const float height = 900;
 const float width = 900;

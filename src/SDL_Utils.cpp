@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 
-#include "SDL_Utils.hpp"
-#include "colony.hpp"
+#include "life/SDL_Utils.hpp"
+#include "life/colony.hpp"
 
 SDL_Window* initializeWindow(float width, float height) {
 	// Create an SDL window

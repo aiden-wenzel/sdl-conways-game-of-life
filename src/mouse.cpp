@@ -2,7 +2,7 @@
 #include <utility>
 #include <cmath>
 
-#include "mouse.hpp"
+#include "life/mouse.hpp"
 
 std::pair<int, int> get_mouse_pos(SDL_Event* event) {
 	return {event->motion.x, event->motion.y};

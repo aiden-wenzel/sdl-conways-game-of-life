@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "colony.hpp"
+#include "life/colony.hpp"
 
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);

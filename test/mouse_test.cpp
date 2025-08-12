@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "mouse.hpp"
+#include "life/mouse.hpp"
 
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);

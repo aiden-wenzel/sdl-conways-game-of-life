@@ -1,8 +1,8 @@
 #include <SDL3/SDL.h>
 #include <vector>
 
-#include "SDL_Utils.hpp"
-#include "colony.hpp"
+#include "life/SDL_Utils.hpp"
+#include "life/colony.hpp"
 
 const float height = 900;
 const float width = 900;

@@ -1,8 +1,8 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 
-#include "game.hpp"
-#include "SDL_Utils.hpp"
+#include "life/game.hpp"
+#include "life/SDL_Utils.hpp"
 
 Game::Game(float width, float height, float cell_size) {
 	this->window = this->initializeWindow(width, height);

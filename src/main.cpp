@@ -7,10 +7,10 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
 
-#include "SDL_Utils.hpp"
-#include "colony.hpp"
-#include "mouse.hpp"
-#include "game.hpp"
+#include "life/SDL_Utils.hpp"
+#include "life/colony.hpp"
+#include "life/mouse.hpp"
+#include "life/game.hpp"
 
 const float WIDTH = 1080;
 const float HEIGHT = 920;

@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 
-#include "SDL_Utils.hpp"
+#include "life/SDL_Utils.hpp"
 
 const float height = 400;
 const float width = height;
