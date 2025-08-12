@@ -44,6 +44,7 @@ include_directories("./build/_deps/googletest-src/googletest/include/")
 include_directories("./build/_deps/imgui-src/")
 include_directories("./build/_deps/imgui-src/backends/")
 include_directories("./src")
+include_directories("include")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(src)
