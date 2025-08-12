@@ -11,11 +11,6 @@ set(CMAKE_CXX_FLAGS "-g3")
 include(FetchContent)
 
 FetchContent_Declare(
-	sdl
-	URL https://github.com/libsdl-org/SDL/releases/download/release-3.2.4/SDL3-3.2.4.tar.gz
-)
-
-FetchContent_Declare(
 	googletest
 	URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
 )
@@ -36,16 +31,16 @@ add_library(imgui STATIC
 )
 
 FetchContent_MakeAvailable(googletest)
-FetchContent_MakeAvailable(sdl)
 FetchContent_MakeAvailable(imgui)
 
-include_directories("./build/_deps/sdl-src/include/")
 include_directories("./build/_deps/googletest-src/googletest/include/")
 include_directories("./build/_deps/imgui-src/")
 include_directories("./build/_deps/imgui-src/backends/")
 include_directories("./src")
 include_directories("include")
+include_directories("deps/SDL/include")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_subdirectory(deps/SDL)
 add_subdirectory(src)
 add_subdirectory(test)
