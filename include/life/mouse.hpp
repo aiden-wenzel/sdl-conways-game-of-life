@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 #include <utility>
 
-#include "colony.hpp"
+#include "life/colony.hpp"
 
 std::pair<int, int> get_mouse_pos(SDL_Event* event);
 std::pair<int, int> mouse_to_index(const std::pair<int, int>& mouse_pos, float cell_size);
