@@ -1,9 +1,9 @@
 add_executable(colony_test colony_test.cpp)
-target_link_libraries(colony_test gtest_main game_of_life)
+target_link_libraries(colony_test gtest game_of_life)
 add_test(colony_test colony_test)
 
 add_executable(mouse_test mouse_test.cpp)
-target_link_libraries(mouse_test gtest_main game_of_life)
+target_link_libraries(mouse_test gtest game_of_life)
 add_test(mouse_test mouse_test)
 
 add_executable(render_cell_test render_cell.cpp)
